@@ -14,6 +14,7 @@ variable "ansible-install-cmd" {
       "sudo apt-get install ansible -y"
     ]
 }
+
 resource "google_compute_instance" "controler" {
 
   name = "ctrl"
@@ -31,41 +32,11 @@ resource "google_compute_instance" "controler" {
   provisioner "remote-exec" {
     inline = "${var.ansible-install-cmd}"
     connection {
+      type = "ssh"
       user = "loicmdivad"
-      agent = "true"
-      timeout = "30s"
+      timeout = "60s"
+      agent = false
+      private_key = "${file("~/.ssh/google_compute_engine")}"
     }
-  }
-}
-
-resource "google_compute_instance" "app" {
-
-  name = "app01"
-  zone = "europe-west1-d"
-  machine_type = "n1-standard-2"
-  boot_disk {
-    initialize_params {
-      image = "ubuntu-1710"
-    }
-  }
-  network_interface {
-    network = "default"
-    access_config { }
-  }
-}
-
-resource "google_compute_instance" "ldbc" {
-
-  name = "ldbc"
-  zone = "europe-west1-d"
-  machine_type = "n1-standard-2"
-  boot_disk {
-    initialize_params {
-      image = "ubuntu-1710"
-    }
-  }
-  network_interface {
-    network = "default"
-    access_config { }
   }
 }
