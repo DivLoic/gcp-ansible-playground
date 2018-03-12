@@ -29,14 +29,6 @@ resource "google_compute_instance" "controler" {
     network = "default"
     access_config { }
   }
-  provisioner "remote-exec" {
-    inline = "${var.ansible-install-cmd}"
-    connection {
-      type = "ssh"
-      user = "loicmdivad"
-      timeout = "60s"
-      agent = false
-      private_key = "${file("~/.ssh/google_compute_engine")}"
-    }
-  }
+
+  metadata_startup_script = "${file("./scripts/apt-get-ansible.sh")}"
 }
