@@ -19,7 +19,6 @@ resource "google_compute_instance" "controler" {
     access_config { }
   }
 
-
   metadata_startup_script = "${file("./scripts/apt-get-ansible.sh")}"
 }
 
@@ -37,8 +36,6 @@ resource "google_compute_instance" "loadbalancer" {
     network = "default"
     access_config { }
   }
-
-  metadata_startup_script = "${file("./scripts/apt-get-ansible.sh")}"
 }
 
 resource "google_compute_instance" "webapp01" {
@@ -55,8 +52,6 @@ resource "google_compute_instance" "webapp01" {
     network = "default"
     access_config { }
   }
-
-  metadata_startup_script = "${file("./scripts/apt-get-ansible.sh")}"
 }
 
 resource "google_compute_instance" "webapp02" {
@@ -73,8 +68,6 @@ resource "google_compute_instance" "webapp02" {
     network = "default"
     access_config { }
   }
-
-  metadata_startup_script = "${file("./scripts/apt-get-ansible.sh")}"
 }
 
 resource "google_compute_instance" "database" {
@@ -91,6 +84,4 @@ resource "google_compute_instance" "database" {
     network = "default"
     access_config { }
   }
-
-  metadata_startup_script = "${file("./scripts/apt-get-ansible.sh")}"
 }
