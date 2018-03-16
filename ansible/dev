@@ -3,10 +3,9 @@ ldbc.c.ansible4gcp.internal
 
 [webserver]
 app01.c.ansible4gcp.internal
-app02.c.ansible4gcp.internal
 
 [database]
 db.c.ansible4gcp.internal
 
-[control]
+[controller]
 control.c.ansible4gcp.internal ansible_connection=local

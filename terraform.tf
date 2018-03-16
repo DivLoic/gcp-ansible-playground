@@ -4,7 +4,7 @@ provider "google" {
   region      = "europe-west1"
 }
 
-resource "google_compute_instance" "controler" {
+resource "google_compute_instance" "controller" {
 
   name = "ctrl"
   zone = "europe-west1-d"
@@ -41,22 +41,6 @@ resource "google_compute_instance" "loadbalancer" {
 resource "google_compute_instance" "webapp01" {
 
   name = "app01"
-  zone = "europe-west1-d"
-  machine_type = "n1-standard-2"
-  boot_disk {
-    initialize_params {
-      image = "ubuntu-1710"
-    }
-  }
-  network_interface {
-    network = "default"
-    access_config { }
-  }
-}
-
-resource "google_compute_instance" "webapp02" {
-
-  name = "app02"
   zone = "europe-west1-d"
   machine_type = "n1-standard-2"
   boot_disk {
