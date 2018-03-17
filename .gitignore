@@ -13,3 +13,7 @@
 ### JetBrains template
 .idea/
 *iml
+
+### Ansible template
+*.retry
+
