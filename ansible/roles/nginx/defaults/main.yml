@@ -1,5 +1,5 @@
 ---
 sites:
   myapp:
-    frontend: 80
+    frontend: 8080
     backend: 80
