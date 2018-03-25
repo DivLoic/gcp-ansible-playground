@@ -1,18 +1,22 @@
 ---
 - hosts: loadbalancer
   become: true
+  gather_facts: false
   tasks:
     - name: verify nginx service
       command: service nginx status
+      changed_when: false
 
     - name: verify nginx is listening on 80
       wait_for: port=80 timeout=1
 
 - hosts: webserver
   become: true
+  gather_facts: false
   tasks:
     - name: verify apache2 service
       command: service apache2 status
+      changed_when: false
 
     - name: verify apache2 is listening on 80
       wait_for: port=80 timeout=1
@@ -22,11 +26,13 @@
   tasks:
     - name: verify mysql service
       command: service mysql status
+      changed_when: false
 
     - name: verify mysql is listening on 3306
-      wait_for: host={{ ansible_eth0.ipv4.address }} port=3306 timeout=1
+      wait_for: host={{ ansible_default_ipv4.address }} port=3306 timeout=1
 
 - hosts: control
+  gather_facts: false
   tasks:
     - name: verify end-to-end index response
       uri: url=http://{{item}} return_content=yes
@@ -47,10 +53,11 @@
       with_items: "{{lb_db.results}}"
 
 - hosts: loadbalancer
+  gather_facts: false
   tasks:
     - name: verify backend index response
       uri: url=http://{{item}} return_content=yes
-      with_items: groups.webserver
+      with_items: "{{ groups.webserver }}"
       register: app_index
 
     - fail: msg="index failed to return content"
@@ -59,7 +66,7 @@
 
     - name: verify backend db response
       uri: url=http://{{item}}/db return_content=yes
-      with_items: groups.webserver
+      with_items: "{{ groups.webserver }}"
       register: app_db
 
     - fail: msg="db failed to return content"

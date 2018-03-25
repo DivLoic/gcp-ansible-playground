@@ -3,7 +3,7 @@
   become: true
   tasks:
     - name: install tools
-      apt: name={{item}} state=present update_cache=yes
+      apt: name={{item}} state=present
       with_items:
         - nginx
         - python-httplib2
